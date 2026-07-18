@@ -1,6 +1,9 @@
 HELP.md
 .gradle
 build/
+
+### Organizer starter pack — provided material, DRAFT / not licensed for external distribution
+realdoor-hackathon-starter-pack/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

@@ -27,9 +27,11 @@ import java.util.Map;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final ProfileAssembler profileAssembler;
 
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, ProfileAssembler profileAssembler) {
         this.profileService = profileService;
+        this.profileAssembler = profileAssembler;
     }
 
     @PostMapping("/sessions")
@@ -41,6 +43,15 @@ public class ProfileController {
     @GetMapping("/sessions/{sessionId}")
     public ProfileSession getSession(@PathVariable String sessionId) {
         return profileService.get(sessionId);
+    }
+
+    /**
+     * The confirmed household profile handed to the Understand stage. Contains only fields the renter
+     * has confirmed or corrected — unconfirmed extractions are intentionally absent.
+     */
+    @GetMapping("/sessions/{sessionId}/household")
+    public HouseholdProfile getHouseholdProfile(@PathVariable String sessionId) {
+        return profileAssembler.assemble(profileService.get(sessionId));
     }
 
     @DeleteMapping("/sessions/{sessionId}")
